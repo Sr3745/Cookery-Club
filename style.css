@@ -90,7 +90,7 @@ section {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
 }
 .call-btn:hover { background-color: #333; border-color: #333; }
 #contact a { text-decoration: none; }
@@ -123,6 +123,13 @@ section {
 
 #contact { background: linear-gradient(160deg, #a8e063, #56ab2f); color: white; }
 #contact .convenor { font-size: 1.5rem; font-weight: 600; }
+/* NEW: Styling for the visible phone number */
+#contact .phone-number {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
