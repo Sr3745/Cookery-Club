@@ -49,7 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let prevTranslate = 0;
 
     function getPositionX(event) {
-        return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+        // UPDATED: clientX changed to pageX for better touch consistency
+        return event.type.includes('mouse') ? event.pageX : event.touches[0].pageX;
     }
 
     function dragStart(event) {
