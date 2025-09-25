@@ -17,13 +17,19 @@ body {
 /* --- Main Scroll Container & Snap Behavior --- */
 .scroll-container {
     width: 100%;
-    height: 100dvh; /* Use dynamic viewport height for mobile bug fix */
+    height: 100dvh;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
 }
 
-.scroll-container::-webkit-scrollbar { display: none; }
-.scroll-container { -ms-overflow-style: none; scrollbar-width: none; }
+/* Hide the default scrollbar for a cleaner look */
+.scroll-container::-webkit-scrollbar {
+    display: none;
+}
+.scroll-container {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
 
 /* --- Section Styling --- */
 section {
@@ -113,30 +119,11 @@ section {
 
 #contact { background: linear-gradient(160deg, #a8e063, #56ab2f); color: white; }
 #contact .convenor { font-size: 1.5rem; font-weight: 600; }
-#contact .phone-number { font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; }
-
-/* NEW: Fixed Footer Styling */
-.site-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    font-size: 1rem;
+#contact .phone-number {
+    font-size: 1.5rem;
     font-weight: 600;
-    z-index: 100;
+    margin-top: 0.5rem;
 }
-.site-footer a {
-    color: white;
-    text-decoration: none;
-}
-.site-footer a:hover {
-    text-decoration: underline;
-}
-
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
