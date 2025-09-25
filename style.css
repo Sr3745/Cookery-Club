@@ -25,7 +25,6 @@ body {
 .page-container {
     position: relative;
     width: 100%;
-    /* REMOVED: height is now set by JavaScript for better accuracy */
     cursor: grab;
 }
 .page-container:active {
@@ -42,21 +41,14 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 4rem 1rem;
+    padding: 2rem 1rem;
     transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
     transform: translateX(100%);
     user-select: none;
 }
 
-.page.active {
-    transform: translateX(0);
-    z-index: 2;
-}
-
-.page.previous {
-    transform: translateX(-100%);
-    z-index: 1;
-}
+.page.active { transform: translateX(0); z-index: 2; }
+.page.previous { transform: translateX(-100%); z-index: 1; }
 
 /* --- Navigation Cue Styling --- */
 @keyframes pulse {
@@ -64,7 +56,6 @@ body {
     50% { opacity: 1; transform: scale(1.05); }
     100% { opacity: 0.7; transform: scale(1); }
 }
-
 .nav-cue {
     position: absolute;
     bottom: 30px;
@@ -73,15 +64,12 @@ body {
     opacity: 0.7;
     animation: pulse 2.5s infinite ease-in-out;
 }
-
 .mobile-cue { display: none; }
 .desktop-cue { display: block; }
 #hero .desktop-cue { color: white; }
-#invitation .nav-cue, #rules .nav-cue, #details .nav-cue, #contact .nav-cue {
-    display: none;
-}
+#invitation .nav-cue, #rules .nav-cue, #details .nav-cue, #contact .nav-cue { display: none; }
 
-/* RE-ADDED: Call button styling */
+/* Call button styling */
 .call-btn {
     padding: 12px 30px;
     background-color: #56ab2f;
@@ -95,56 +83,61 @@ body {
     z-index: 10;
     margin-top: 2rem;
 }
-.call-btn:hover {
-    background-color: #4a2e1f;
-    border-color: #4a2e1f;
-}
-#contact a {
-    text-decoration: none;
-}
+.call-btn:hover { background-color: #4a2e1f; border-color: #4a2e1f; }
+#contact a { text-decoration: none; }
 
-/* --- Page Styles (Hero, Invitation, etc.) --- */
+/* --- Page Styles (Hero, Invitation, etc.) with FLUID SIZING --- */
 #hero { background: linear-gradient(160deg, #f9c55b, #f37335); color: white; text-align: center; }
 #hero .header-info { position: absolute; top: 30px; left: 30px; }
-#hero .logo { width: 220px; }
+#hero .logo { 
+    /* UPDATED: Logo now scales with the screen */
+    width: clamp(150px, 20vw, 220px); 
+}
 #hero .presenter { font-weight: 600; font-size: 1.5rem; }
-#hero h1 { font-family: 'Lobster', cursive; font-size: 7rem; margin: 1rem 0; text-shadow: 3px 3px 5px rgba(0,0,0,0.2); }
-#hero h2 { font-size: 2rem; }
+#hero h1 { 
+    font-family: 'Lobster', cursive;
+    /* UPDATED: Main title now scales with the screen */
+    font-size: clamp(3.5rem, 10vw, 7rem); 
+    margin: 1rem 0; 
+    text-shadow: 3px 3px 5px rgba(0,0,0,0.2); 
+}
+#hero h2 { 
+    /* UPDATED: Subtitle now scales with the screen */
+    font-size: clamp(1.5rem, 4vw, 2rem); 
+}
 
 #invitation { background: linear-gradient(160deg, #c7e9b0, #7ec444); color: #4a2e1f; }
-#invitation h3 { font-size: 2.5rem; margin-bottom: 1rem; }
-#invitation p { font-size: 1.2rem; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+#invitation h3, #rules h3, #details h3, #contact h3 {
+    /* UPDATED: All other headings now scale */
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    margin-bottom: 1rem;
+}
+#invitation p { font-size: clamp(1rem, 2.5vw, 1.2rem); max-width: 700px; margin: 0 auto; line-height: 1.6; }
 
 #rules { background: linear-gradient(160deg, #b0e9c7, #44c47e); color: #4a2e1f; }
 .rules-content { max-width: 800px; text-align: left; }
-#rules h3 { font-size: 2.5rem; margin-bottom: 1.5rem; text-align: center; }
-#rules ul { list-style-type: disc; margin-left: 2rem; font-size: 1.1rem; line-height: 1.8; }
+#rules ul { list-style-type: disc; margin-left: 2rem; line-height: 1.8; font-size: clamp(0.9rem, 2.2vw, 1.1rem); }
 #rules ul li { margin-bottom: 1rem; }
 #rules strong { color: #333; }
 
 #details { background: linear-gradient(160deg, #fef0b2, #f9d77e); color: #4a2e1f; }
 .details-container { display: flex; align-items: center; gap: 3rem; }
 .details-text { text-align: left; }
-.details-text h3 { font-size: 2.5rem; margin-bottom: 2rem; }
 .info-item { display: flex; align-items: center; margin-bottom: 1.5rem; }
 .info-item img { width: 35px; margin-right: 1.5rem; }
-.info-item p { font-size: 1.3rem; }
+.info-item p { font-size: clamp(1rem, 2.5vw, 1.3rem); }
 .details-image img { max-width: 100%; border-radius: 15px; }
 
-#contact { background: linear-gradient(160deg, #a8e_063, #56ab2f); color: white; }
-#contact h3 { font-size: 2rem; margin-bottom: 1rem; }
+#contact { background: linear-gradient(160deg, #a8e063, #56ab2f); color: white; }
 #contact .convenor { font-size: 1.5rem; font-weight: 600; }
+.phone-link { font-size: 1.5rem; margin-top: 1rem; color: white; font-weight: 600; text-decoration: none; }
 
-/* --- Responsive Adjustments --- */
+/* --- Responsive Adjustments for Mobile --- */
 @media (max-width: 768px) {
     .desktop-cue { display: none; }
     .mobile-cue { display: block; }
-
-    #hero .logo { width: 180px; }
-    #hero h1 { font-size: 4rem; }
-    #hero h2 { font-size: 1.5rem; }
     .details-container { flex-direction: column; }
     .details-text { text-align: center; margin-bottom: 2rem; }
     .info-item { justify-content: center; }
-    #rules ul { margin-left: 1rem; font-size: 1rem; }
+    #rules ul { margin-left: 1rem; }
 }

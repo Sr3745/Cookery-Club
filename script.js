@@ -3,15 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const pages = document.querySelectorAll('.page');
     let currentPageIndex = 0;
 
-    // --- NEW: Fullscreen Height Fix ---
+    // --- Fullscreen Height Fix ---
     function setPageHeight() {
-        // This function measures the actual visible height and sets the container to it.
         pageContainer.style.height = `${window.innerHeight}px`;
     }
-    // Set the height on initial load and when the window is resized (e.g., phone rotation)
     setPageHeight();
     window.addEventListener('resize', setPageHeight);
-
 
     // --- Core Navigation Functions ---
     function goToNextPage() {
@@ -43,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (e.key === 'ArrowLeft') goToPreviousPage();
     });
 
-    // --- Swipe and Mouse Drag Navigation ---
+    // --- Swipe and Mouse Drag Navigation (MORE ROBUST VERSION) ---
     let isDragging = false;
     let startX = 0;
     let currentTranslate = 0;
@@ -53,44 +50,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function dragStart(event) {
-        // MODIFIED: Prevent dragging if the user clicks the call button
         if (event.target.closest('.call-btn')) {
             isDragging = false;
             return;
         }
-        
         isDragging = true;
         startX = getPositionX(event);
-        pageContainer.style.transition = 'none';
+        pageContainer.style.transition = 'none'; // Disable transition for smooth dragging
     }
 
     function drag(event) {
         if (isDragging) {
+            // UPDATED: This prevents the browser's default touch actions (like scrolling)
+            event.preventDefault(); 
             const currentX = getPositionX(event);
             currentTranslate = currentX - startX;
+            
+            // Apply visual dragging effect only to the current page
             const currentPage = pages[currentPageIndex];
             currentPage.style.transform = `translateX(${currentTranslate}px)`;
-            if (pages[currentPageIndex - 1]) {
-                pages[currentPageIndex - 1].style.transform = `translateX(${-window.innerWidth + currentTranslate}px)`;
-            }
-            if (pages[currentPageIndex + 1]) {
-                pages[currentPageIndex + 1].style.transform = `translateX(${window.innerWidth + currentTranslate}px)`;
-            }
         }
     }
 
     function dragEnd() {
         if (!isDragging) return;
         isDragging = false;
+        
         const threshold = window.innerWidth / 4;
+
+        // Re-enable transitions and clean up inline styles
         pageContainer.style.transition = '';
         pages.forEach(page => page.style.transform = '');
+
         if (currentTranslate < -threshold) {
             goToNextPage();
         } else if (currentTranslate > threshold) {
             goToPreviousPage();
         }
-        currentTranslate = 0;
+        
+        currentTranslate = 0; // Reset for next drag
     }
 
     // Add event listeners
@@ -100,8 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
     pageContainer.addEventListener('touchend', dragEnd);
     pageContainer.addEventListener('mouseleave', dragEnd);
 
+    // UPDATED: Added { passive: false } to take full control of touchmove
     pageContainer.addEventListener('mousemove', drag);
-    pageContainer.addEventListener('touchmove', drag);
+    pageContainer.addEventListener('touchmove', drag, { passive: false });
 
     // Set initial state
     pages[0].classList.add('active');
