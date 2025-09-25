@@ -25,11 +25,11 @@ body {
 .page-container {
     position: relative;
     width: 100%;
-    height: 100dvh; /* UPDATED: dvh fixes mobile browser blank space */
-    cursor: grab; /* Indicate draggable */
+    /* REMOVED: height is now set by JavaScript for better accuracy */
+    cursor: grab;
 }
 .page-container:active {
-    cursor: grabbing; /* Indicate dragging */
+    cursor: grabbing;
 }
 
 .page {
@@ -44,8 +44,8 @@ body {
     align-items: center;
     padding: 4rem 1rem;
     transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-    transform: translateX(100%); /* Default: pages are off-screen to the right */
-    user-select: none; /* Prevent text selection while dragging */
+    transform: translateX(100%);
+    user-select: none;
 }
 
 .page.active {
@@ -74,16 +74,36 @@ body {
     animation: pulse 2.5s infinite ease-in-out;
 }
 
-.mobile-cue { display: none; } /* Hidden by default */
-.desktop-cue { display: block; } /* Visible by default */
-#hero .desktop-cue { color: white; } /* Make arrow visible on hero */
-
-/* UPDATED: This rule now applies to both desktop and mobile, hiding the cue on all pages except the first */
+.mobile-cue { display: none; }
+.desktop-cue { display: block; }
+#hero .desktop-cue { color: white; }
 #invitation .nav-cue, #rules .nav-cue, #details .nav-cue, #contact .nav-cue {
     display: none;
 }
 
-/* --- Page 1: Hero --- */
+/* RE-ADDED: Call button styling */
+.call-btn {
+    padding: 12px 30px;
+    background-color: #56ab2f;
+    border: 2px solid #56ab2f;
+    border-radius: 30px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    margin-top: 2rem;
+}
+.call-btn:hover {
+    background-color: #4a2e1f;
+    border-color: #4a2e1f;
+}
+#contact a {
+    text-decoration: none;
+}
+
+/* --- Page Styles (Hero, Invitation, etc.) --- */
 #hero { background: linear-gradient(160deg, #f9c55b, #f37335); color: white; text-align: center; }
 #hero .header-info { position: absolute; top: 30px; left: 30px; }
 #hero .logo { width: 220px; }
@@ -91,12 +111,10 @@ body {
 #hero h1 { font-family: 'Lobster', cursive; font-size: 7rem; margin: 1rem 0; text-shadow: 3px 3px 5px rgba(0,0,0,0.2); }
 #hero h2 { font-size: 2rem; }
 
-/* --- Page 2: Invitation --- */
 #invitation { background: linear-gradient(160deg, #c7e9b0, #7ec444); color: #4a2e1f; }
 #invitation h3 { font-size: 2.5rem; margin-bottom: 1rem; }
 #invitation p { font-size: 1.2rem; max-width: 700px; margin: 0 auto; line-height: 1.6; }
 
-/* Page 3: Rules */
 #rules { background: linear-gradient(160deg, #b0e9c7, #44c47e); color: #4a2e1f; }
 .rules-content { max-width: 800px; text-align: left; }
 #rules h3 { font-size: 2.5rem; margin-bottom: 1.5rem; text-align: center; }
@@ -104,7 +122,6 @@ body {
 #rules ul li { margin-bottom: 1rem; }
 #rules strong { color: #333; }
 
-/* Page 4: Event Details */
 #details { background: linear-gradient(160deg, #fef0b2, #f9d77e); color: #4a2e1f; }
 .details-container { display: flex; align-items: center; gap: 3rem; }
 .details-text { text-align: left; }
@@ -114,13 +131,11 @@ body {
 .info-item p { font-size: 1.3rem; }
 .details-image img { max-width: 100%; border-radius: 15px; }
 
-/* Page 5: Contact */
-#contact { background: linear-gradient(160deg, #a8e063, #56ab2f); color: white; }
+#contact { background: linear-gradient(160deg, #a8e_063, #56ab2f); color: white; }
 #contact h3 { font-size: 2rem; margin-bottom: 1rem; }
 #contact .convenor { font-size: 1.5rem; font-weight: 600; }
-.phone-link { font-size: 1.5rem; margin-top: 1rem; color: white; font-weight: 600; text-decoration: none; }
 
-/* --- Responsive Adjustments for Mobile --- */
+/* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
     .desktop-cue { display: none; }
     .mobile-cue { display: block; }
